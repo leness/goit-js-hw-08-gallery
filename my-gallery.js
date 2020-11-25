@@ -1,19 +1,39 @@
 import galleryList from "./gallery-items.js"; 
 console.log(galleryList);
 
-const galleryItemRef = document.querySelector('.js-gallery');
+const galleryRef = document.querySelector('.js-gallery');
+const divRef = document.querySelector('.js-lightbox');
+const modalref = document.querySelector('.lightbox__overlay');
+const imgRef = document.querySelector('.lightbox__image');
+const btnRef = document.querySelector('[data-action="close-lightbox"]');
 
 
-let newArr = galleryList.map(({ preview, original, description }) => {
-   return `<li class="gallery__item"><a class="gallery__link" href=${original}><img class="gallery__image" src=${preview} data-source=${original} alt=${description} /></a></li>`;
-}).join('');
+ const newArr = galleryList.map(({ preview, original, description }) => {
+    return `<li class="gallery__item"><a class="gallery__link" href=${original}><img class="gallery__image" src=${preview} data-source=${original} alt=${description} /></a></li>`;
+ }).join('');
 
-galleryItemRef.innerHTML = newArr;
-console.log(newArr);
-console.log(galleryItemRef);
+ galleryRef.insertAdjacentHTML('afterbegin', newArr)
+//  console.log(newArr);
 
+galleryRef.addEventListener('click', (evt) => {
+   evt.preventDefault();
+   if (evt.target.nodeName !== 'IMG') {
+      return;
+   } 
+   if (evt.target.nodeName === 'IMG') {
+      divRef.classList.add('is-open');
+      imgRef.src = evt.target.getAttribute('data-source');
+      imgRef.alt = evt.target.alt;
+   }
+});
+ 
+btnRef.addEventListener('click', () => {
+   divRef.classList.remove('is-open');
+   imgRef.src = "";
+});
 
-
-
-
+modalref.addEventListener('click', () => {
+   divRef.classList.remove('is-open');
+   imgRef.src = "";
+});
 
