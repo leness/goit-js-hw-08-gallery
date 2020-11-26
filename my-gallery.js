@@ -20,20 +20,18 @@ galleryRef.addEventListener('click', (evt) => {
    if (evt.target.nodeName !== 'IMG') {
       return;
    } 
-   if (evt.target.nodeName === 'IMG') {
       divRef.classList.add('is-open');
       imgRef.src = evt.target.getAttribute('data-source');
       imgRef.alt = evt.target.alt;
-   }
 });
+
  
-btnRef.addEventListener('click', () => {
+btnRef.addEventListener('click', closeLightBox);
+
+modalref.addEventListener('click', closeLightBox);
+
+function closeLightBox() {
    divRef.classList.remove('is-open');
    imgRef.src = "";
-});
-
-modalref.addEventListener('click', () => {
-   divRef.classList.remove('is-open');
-   imgRef.src = "";
-});
-
+   imgRef.alt = "";
+}
